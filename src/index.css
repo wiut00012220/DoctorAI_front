@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+.neon-button {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 8px #0e91a5;
+}
+
+.neon-button:hover {
+  box-shadow: 0 0 15px #0e91a5, 0 0 25px #0e91a5;
+  color: #ffffff;
+  background-color: #0e91a5;
+  border-color: #0e91a5;
+}
+
+.nav-link {
+  position: relative;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #0e91a5;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #0e91a5;
+  text-shadow: 0 0 5px #0e91a5;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 7px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0e91a5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0e91a5;
+}
