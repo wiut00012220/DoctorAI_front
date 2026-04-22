@@ -7,6 +7,8 @@ import Clinics from "../../pages/Clinics";
 import ListDocs from "../container/Doctor/ListDocs";
 import ClinicsList from "../container/Clinics/ClinicsList";
 import DocDetail from "../container/Doctor/DocDetail";
+import DoctorSignup from "../../pages/auth/DoctorSignup";
+import PatientSignup from "../../pages/auth/PatientSignup";
 
 function Index() {
   return (
@@ -19,6 +21,9 @@ function Index() {
           <Route path="/doctors/:id" element={<DocDetail />} />
           <Route path="/doctors/listClinics" element={<ClinicsList />} />
           <Route path="/clinics" element={<Clinics />} />
+          <Route path="/signup/doctor" element={<DoctorSignup />} />
+          <Route path="/signup/patient" element={<PatientSignup />} />
+          {/* <Route path="/login" element={<LoginPage />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>
