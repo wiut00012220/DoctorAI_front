@@ -9,7 +9,7 @@ import ClinicsList from "../container/Clinics/ClinicsList";
 import DocDetail from "../container/Doctor/DocDetail";
 import DoctorSignup from "../../pages/auth/DoctorSignup";
 import PatientSignup from "../../pages/auth/PatientSignup";
-
+import LoginPage from "../../pages/LoginPage";
 function Index() {
   return (
     <BrowserRouter>
@@ -23,7 +23,7 @@ function Index() {
           <Route path="/clinics" element={<Clinics />} />
           <Route path="/signup/doctor" element={<DoctorSignup />} />
           <Route path="/signup/patient" element={<PatientSignup />} />
-          {/* <Route path="/login" element={<LoginPage />} /> */}
+          <Route path="/login" element={<LoginPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

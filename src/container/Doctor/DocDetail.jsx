@@ -197,6 +197,13 @@ function DocDetail() {
                     <div>
                       <button
                         onClick={() => {
+                          const token = localStorage.getItem("token");
+
+                          if (!token) {
+                            alert("Please login first to book consultation");
+                            return;
+                          }
+
                           setSelectedDoctor(data);
                           setOpenModal(true);
                         }}

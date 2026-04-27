@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 function DoctorCard({ data, setOpenModal, setSelectedDoctor }) {
   const [isPhone, setIsPhone] = useState(false);
+  console.log(data);
 
   return (
     <div className="bg-white flex flex-row justify-start gap-11 mb-4 p-5 py-8 rounded-[10px] shadow-xl">
@@ -57,11 +58,18 @@ function DoctorCard({ data, setOpenModal, setSelectedDoctor }) {
             onClick={() => setIsPhone(true)}
             className="bg-[#0E91A5] text-white py-2 px-3 rounded-md transition-transform duration-500"
           >
-            {isPhone ? <h1>+998...</h1> : <h1>Call +998...</h1>}
+            {isPhone ? <h1>{data.phone}</h1> : <h1>Call +998...</h1>}
           </button>
 
           <button
             onClick={() => {
+              const token = localStorage.getItem("token");
+
+              if (!token) {
+                alert("Please login first to book consultation");
+                return;
+              }
+
               setSelectedDoctor(data);
               setOpenModal(true);
             }}

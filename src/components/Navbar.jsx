@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Container from "./Container";
 import { BiSolidArrowFromLeft } from "react-icons/bi";
-import { RxCross1 } from "react-icons/rx";
 import SignupChoiceModal from "./SignupChoiceModal";
+import LoginModal from "./LoginModal";
 
-function Navbar({ setOpenModal }) {
+function Navbar() {
+  const navigate = useNavigate();
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [openSignupChoice, setOpenSignupChoice] = useState(false);
+  const [openLoginModal, setOpenLoginModal] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false);
+
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +26,13 @@ function Navbar({ setOpenModal }) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+    navigate("/");
+  };
 
   return (
     <>
@@ -68,20 +84,66 @@ function Navbar({ setOpenModal }) {
             </Link>
 
             <div className="text-[18px] font-normal flex items-center justify-end gap-4 md:w-[300px]">
-              <button
-                onClick={() => setOpenSignupChoice(true)}
-                className="cursor-pointer flex items-center justify-center gap-1 neon-button border border-[#0E91A5] text-[#0E91A5] px-3 py-1 rounded-md"
-              >
-                <BiSolidArrowFromLeft />
-                <span>Sign up</span>
-              </button>
+              {user ? (
+                <div className="relative">
+                  <button
+                    onClick={() => setOpenDropdown((prev) => !prev)}
+                    className="flex items-center gap-2"
+                  >
+                    <img
+                      src={user.photo || "/default-user.png"}
+                      alt={user.firstName || "User"}
+                      className="w-10 h-10 rounded-full object-cover border-2 border-[#0E91A5]"
+                    />
 
-              <button
-                onClick={() => setOpenModal(true)}
-                className="cursor-pointer neon-button border border-[#0E91A5] text-[#0E91A5] px-3 py-1 rounded-md"
-              >
-                Login
-              </button>
+                    <span className="text-white font-semibold">
+                      {user.firstName}
+                    </span>
+                  </button>
+
+                  {/* DROPDOWN */}
+                  {openDropdown && (
+                    <div className="absolute right-0 mt-3 w-40 bg-white rounded-xl shadow-lg overflow-hidden z-50">
+                      <button
+                        onClick={() => {
+                          setOpenDropdown(false);
+                          navigate("/profile");
+                        }}
+                        className="w-full text-left px-4 py-3 text-black hover:bg-gray-100"
+                      >
+                        Profile
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          setOpenDropdown(false);
+                        }}
+                        className="w-full text-left px-4 py-3 text-red-500 hover:bg-gray-100"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <>
+                  <button
+                    onClick={() => setOpenSignupChoice(true)}
+                    className="cursor-pointer flex items-center justify-center gap-1 neon-button border border-[#0E91A5] text-[#0E91A5] px-3 py-1 rounded-md"
+                  >
+                    <BiSolidArrowFromLeft />
+                    <span>Sign up</span>
+                  </button>
+
+                  <button
+                    onClick={() => setOpenLoginModal(true)}
+                    className="cursor-pointer neon-button border border-[#0E91A5] text-[#0E91A5] px-3 py-1 rounded-md"
+                  >
+                    Login
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </Container>
@@ -89,6 +151,10 @@ function Navbar({ setOpenModal }) {
 
       {openSignupChoice && (
         <SignupChoiceModal setOpenSignupChoice={setOpenSignupChoice} />
+      )}
+
+      {openLoginModal && (
+        <LoginModal setOpenLoginModal={setOpenLoginModal} setUser={setUser} />
       )}
     </>
   );

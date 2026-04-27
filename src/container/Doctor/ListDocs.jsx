@@ -38,6 +38,8 @@ function ListDocs() {
     getList();
   }, [name]);
 
+  console.log(docList);
+
   return (
     <div className="relative">
       <div className="flex justify-center items-center bg-[#013040] pt-[130px] gap-2 pb-[20px]">
